@@ -9,18 +9,52 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = WeatherDataViewModel()
+    @State private var showingAddCity = false
+    @State var temperatureMeasurement = "Celsius"
+    
     var body: some View {
-        VStack {
-            ForEach(viewModel.weatherData) { weather in
-                CityWeatherView(viewModel: CityWeatherVM(model: weather))
+        NavigationStack {
+            ZStack {
+                Color("Backdrop")
+                    .ignoresSafeArea()
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(viewModel.weatherData) { weather in
+                            CityWeatherView(viewModel: CityWeatherVM(model: weather, temperatureMeasurement: temperatureMeasurement))
+                        }
+
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.trailing, 5)
+                }
+                .navigationTitle("Weathery")
+                .foregroundColor(Color.white)
+                .toolbar {
+                    NavigationLink {
+                            SettingsView(temperatureMeasurement: $temperatureMeasurement)
+                    } label: {
+                        Image(systemName: "gear")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .bold()
+                            .foregroundColor(Color.black)
+
+                    }
+                    Button {
+                        showingAddCity = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .bold()
+                            .foregroundColor(Color.black)
+
+                    }
+                }
+                .sheet(isPresented: $showingAddCity) {
+                    AddCityView(weather: viewModel)
+                }
             }
-            Button("Get Chapel Hill data") {
-                viewModel.getWeather(cityString: "Chapel Hill")
-            }
-        }
-        // MARK: This onAppear modifier is just fetching the data for Charlotte when this view appears. You can get rid of it.
-        .onAppear {
-            viewModel.getWeather(cityString: "Charlotte")
         }
     }
 }

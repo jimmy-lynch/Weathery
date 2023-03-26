@@ -22,10 +22,10 @@ import Foundation
         Task {
             guard let response = await WeatherService.getWeather(cityString: cityString) else {
                 // Response is nil
-                // MARK: Put some logic here that will signal to the user that the request has failed
-                return
+                return "data fetch failed"
             }
             weatherData.append(response)
+            return "success"
         }
     }
     
