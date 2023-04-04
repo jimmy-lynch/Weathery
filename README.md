@@ -13,4 +13,4 @@ Improvement reflection:
 - Could better display the weather views, using more balanced features instead of hard coding padding.
 - Should add a remove option for when you add a city to view.
 
-<img src="https://github.com/appteamcarolina/s23-academy-mp08-weathery-jimmy-lynch/blob/main/Weathery%20Recording.gif" width=400>
+<img src="https://github.com/jimmy-lynch/Weathery/blob/main/Weathery%20Recording.gif" width=400>
